@@ -7,3 +7,5 @@ docker scout quickview ronaldojssilva/imagem-caotica:v1
 docker scout cves --format markdown ronaldojssilva/imagem-caotica:v1
 
 docker scout quickview fs://.
+
+docker scout enable --org ronaldojssilva ronaldojssilva/imagem-caotica
