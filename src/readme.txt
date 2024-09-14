@@ -42,8 +42,26 @@ history | grep build
 
 
 ASSINATURA DE IMAGEM
-cosign generate-key-pair 
-soloquei essa chave(Secreta@1)
+    cosign generate-key-pair 
+        soloquei essa chave(Secreta@1)
+        posso alterar o nome dos arquivos das chaves se quiser com o comando abaixo
+            cosign generate-key-pair --output-key-prefix minha-chave
 
-posso alterar o nome dos arquivos das chaves se quiser com o comando abaixo
-cosign generate-key-pair --output-key-prefix minha-chave
+    assinando a imagem
+        docker build -t ronaldojssilva/imagem-assinada:v1 .
+        docker push ronaldojssilva/imagem-assinada:v1
+        assinar a imagem
+            cosign sign --key cosign.key ronaldojssilva/imagem-assinada:v1
+        posso adicionar parametros na assinatura
+            cosign sign --key cosign.key -a proprietario="Ronaldo Silva" ronaldojssilva/imagem-assinada:v1
+
+    verificar se a imagem esta assinada
+        cosign verify --key cosign.pub ronaldojssilva/imagem-assinada:v1
+
+    gerar uma imagem com mesma tag sem assinatura pra simular uma tentativa de quebrar a imagem 
+        alterei p server.js colocando console.log("Código safado");
+        gerar a imagem sem assinatura e sobe para o registry
+            docker build --push -t ronaldojssilva/imagem-assinada:v1 .
+        observar que no hub o hash da imagem v1 é diferente do assinado
+        verificar novamente 
+            cosign verify --key cosign.pub ronaldojssilva/imagem-assinada:v1
