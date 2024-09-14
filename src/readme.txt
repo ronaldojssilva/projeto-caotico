@@ -39,3 +39,11 @@ docker scout cves fs://.
 docker build -t ronaldojssilva/imagem-caotica:v4 --push .
 
 history | grep build
+
+
+ASSINATURA DE IMAGEM
+cosign generate-key-pair 
+soloquei essa chave(Secreta@1)
+
+posso alterar o nome dos arquivos das chaves se quiser com o comando abaixo
+cosign generate-key-pair --output-key-prefix minha-chave
